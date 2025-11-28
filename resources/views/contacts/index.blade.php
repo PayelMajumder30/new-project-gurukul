@@ -7,7 +7,6 @@
 
         @if(auth()->user()->isAdmin())
             <a href="{{ route('contacts.create') }}" class="btn btn-primary">New Contact</a>
-            <a href="javascript:void(0)" class="btn btn-outline-secondary ms-2">All Contacts (Admin)</a>
         @endif
     </div>
 

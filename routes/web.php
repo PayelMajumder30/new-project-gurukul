@@ -21,14 +21,13 @@ Route::middleware(['auth'])->group(function () {
 
 
 // Admin-only CRUD and admin list
-Route::middleware(['auth', 'is_admin'])->prefix('contacts')->name('contacts.')->group(function () {
-    // Admin can do full CRUD
-    Route::get('/create', [ContactController::class, 'create'])->name('create');
-    Route::post('/', [ContactController::class, 'store'])->name('store');
-    Route::get('/{contact}/edit', [ContactController::class, 'edit'])->name('edit');
-    Route::put('/{contact}', [ContactController::class, 'update'])->name('update');
-    Route::delete('/{contact}', [ContactController::class, 'destroy'])->name('destroy');
-});
+Route::middleware(['auth', 'is_admin'])->prefix('contacts')->name('contacts.')
+    ->group(function () {
+        Route::resource('/', ContactController::class)->only([
+            'create', 'store', 'edit', 'update', 'destroy'
+        ])->parameters(['' => 'contact']);
+    });
+
 
 // Optional: admin route to view ALL contacts across system
 Route::middleware(['auth', 'is_admin'])->get('/admin/contacts-all', [ContactController::class, 'allContacts'])->name('admin.contacts.all');
